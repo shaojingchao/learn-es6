@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="promise"></h1>
+    <script type="text/javascript">
+    var promiseDiv = document.querySelector("#promise")
+    var delay = new Promise((resolve, reject) => {
+        promiseDiv.innerHTML = "pending..."
+        setTimeout(() => {
+            resolve();
+            reject();
+        }, 1000)
+    })
+    console.log(promiseDiv)
+
+
+    console.log(delay);
+
+    delay.then(() => {
+        alert("promise success!")
+        promiseDiv.innerHTML = 'done!'
+        console.log(delay);
+    }, () => {
+        alert("promise fail!")
+        console.log(delay);
+    })
+
+    window.onload = func;
+    </script>
+</body>
+
+</html>
