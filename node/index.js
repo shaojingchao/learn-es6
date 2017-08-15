@@ -39,6 +39,7 @@ describe("Object.isFrozen",function(){
 
 var oneProp2 = { p: 42 };
 Object.preventExtensions(oneProp2);
+Object.getOwnPropertyDescriptors(oneProp2);
 delete oneProp2.p;
 describe("Object.isFrozen",function(){
     it('5,...如果删除了这个属性,则它会成为一个冻结对象.',function(){
@@ -121,6 +122,42 @@ describe("Object.isFrozen",function(){
 describe("Object.isFrozen",function(){
     it('13,frozen 是一个不可扩展的对象.',function(){
         assert.equal(Object.isExtensible(frozen), false);
+    });
+});
+
+
+// Object.isSealed
+var objSeal = {a:'a',b:'b'};
+Object.seal(objSeal);
+Object.getOwnPropertyDescriptors(objSeal);
+
+describe("Object.seal",function(){
+    it('seal object 是不可删除的',function(){
+        assert(delete objSeal.a === false);
+    });
+});
+
+
+// Object.isSealed
+var objFrozen = {a:'a',b:'b'};
+Object.freeze(objFrozen);
+Object.getOwnPropertyDescriptors(objFrozen);
+
+
+describe("Object.seal",function(){
+    it('frozen object 是不可删除的',function(){
+        assert(delete objFrozen.a === false);
+    });
+});
+
+var shouldSeal = {a:'a'};
+
+Object.preventExtensions(shouldSeal);
+Object.defineProperty(shouldSeal,'a',{configurable:false});
+
+describe("Object.seal",function(){
+    it('shouldSeal isSealed',function(){
+        assert(Object.isSealed(shouldSeal)===true);
     });
 });
 
